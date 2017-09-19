@@ -37,7 +37,8 @@ int main()
     int LDA = N;
     int LDB = N;
     int info;
-        
+       
+    //column-wise storage
     double A[N*N] = {
         8.79,  9.93,  9.83,
         6.11,  6.91,  5.04,
@@ -53,17 +54,26 @@ int main()
 
     int ipiv[N];
 
+    printf("    %f %f %f\n", A[0], A[3], A[6]);
+    printf("A = %f %f %f\n", A[1], A[4], A[7]);
+    printf("    %f %f %f\n\n", A[2], A[5], A[8]);
+
+    printf("    %f \n", b[0]);
+    printf("b = %f \n", b[1]);
+    printf("    %f \n\n", b[2]);
+
     //solve Ax = b
     dgetrf_(&dim, &dim, A, &LDA, ipiv, &info);
-    std::cout << "Factorization complete" << std::endl;
+    std::cout << "Factorization complete." << std::endl;
     dgetrs_(&trans, &dim, &nrhs, A, &LDA, ipiv, b, &LDB, &info);
-    std::cout << "Solution complete" << std::endl;
+    std::cout << "Solution complete." << std::endl << std::endl;
 
     //solution is in vector b
-    std::cout << "Solution is:" << std::endl << "[";
-    for (int i = 0; i < LDB-1; i++)
-        std::cout << b[i] << ", "; 
-    std::cout << b[LDB-1] << "]" << std::endl;
+    std::cout << "Solution y=A\\b is:" << std::endl;
+
+   printf("    %f \n", b[0]);
+   printf("y = %f \n", b[1]);
+   printf("    %f \n", b[2]);
 
     return(0);
 }
