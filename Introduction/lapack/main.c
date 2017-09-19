@@ -15,16 +15,12 @@
  * USI Lugano
  */
 
-#include <iostream>
-#include <vector>
+#include <stdio.h>
 
-
-extern "C" void dgetrf_(int* dim1, int* dim2, double* a, \
-                         int* lda, int* ipiv, int* info);
-extern "C" void dgetrs_(char *TRANS, int *N, int *NRHS, double *A, \
-                        int *LDA, int *IPIV, double *B, int *LDB, int *INFO );
-
-using namespace std;
+extern void dgetrf_(int* dim1, int* dim2, double* a, \
+                    int* lda, int* ipiv, int* info);
+extern void dgetrs_(char *TRANS, int *N, int *NRHS, double *A, \
+                    int *LDA, int *IPIV, double *B, int *LDB, int *INFO );
 
 #define N 3
 #define NRHS 1
@@ -64,12 +60,12 @@ int main()
 
     //solve Ax = b
     dgetrf_(&dim, &dim, A, &LDA, ipiv, &info);
-    std::cout << "Factorization complete." << std::endl;
+    printf("Factorization complete.\n");
     dgetrs_(&trans, &dim, &nrhs, A, &LDA, ipiv, b, &LDB, &info);
-    std::cout << "Solution complete." << std::endl << std::endl;
+    printf("Solution complete.\n\n");
 
     //solution is in vector b
-    std::cout << "Solution y=A\\b is:" << std::endl;
+    printf("Solution y=A\\b is:\n");
 
    printf("    %f \n", b[0]);
    printf("y = %f \n", b[1]);

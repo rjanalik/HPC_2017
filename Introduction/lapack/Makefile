@@ -1,15 +1,13 @@
-CC=g++
-CFLAGS=-c -Wall
+CC=gcc
+CFLAGS=-Wall
 LDFLAGS=
 LIBS=-lblas -llapack
-SOURCES=main.cpp
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=testprog
+SOURCES=main.c
+EXECUTABLE=main
 
-all: $(SOURCES) $(EXECUTABLE)
+all: $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ $(LIBS)
-
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+$(EXECUTABLE): $(SOURCES) 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SOURCES) -o $@ $(LIBS)
+clean:
+	rm -f main.o main
