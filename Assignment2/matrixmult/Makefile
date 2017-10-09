@@ -1,14 +1,24 @@
 .PHONY: benchmark clean tar
 
-CC=gcc
-GOTO=-lblas
+UNAME = $(shell uname)
+
+ifeq ($(UNAME),Linux)
+	GOTO=-Wl,--no-as-needed -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_core -lmkl_gnu_thread -lpthread -lm -ldl -m64 -I${MKLROOT}/include
+else
+	ifeq ($(UNAME),Darwin)
+	GOTO=-Wl,-L${MKLROOT}/lib -Wl,-rpath,${MKLROOT}/lib -lmkl_intel_lp64 -lmkl_core -lmkl_intel_thread -lpthread -lm -ldl -m64 -I${MKLROOT}/include
+	else
+		GOTO=-lblas
+	endif
+endif
+
 
 #
 # Compiler and compiler flags
 #
-#CC = gcc
+CC = gcc
 #CC = icc
-CFLAGS = -Wall -pedantic -O3 -std=gnu99 
+CFLAGS = -Wall -pedantic -O3 -std=gnu99 -fopenmp
 #CFLAGS = -Wall -O3 -std=gnu99
 #CFLAGS = -Wall -g -O0 -std=gnu99
 
@@ -31,8 +41,10 @@ blas_dgemm: matmul.c blas_dgemm.c
 blocked_dgemm: CFLAGS+=-funroll-loops
 
 timing.ps: $(EXECS)
-	./sbatch matrixmult.sbatch matrixmult.sh
-	
+	sbatch ./run_matrixmult.sh
+	module load gnuplot
+	gnuplot timing.gp
+
 benchmark: timing.ps $(EXECS)
 
 clean:

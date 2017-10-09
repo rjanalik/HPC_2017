@@ -185,7 +185,7 @@ time_dgemm (const double *A, const double *B,
 	    double *C,
 	    const unsigned dim)
 {
-    double	mflops, mflop_s;
+    double	gflops, gflop_s;
     double	secs = 0.0;
 
     unsigned num_iterations = MIN_RUNS;
@@ -205,15 +205,15 @@ time_dgemm (const double *A, const double *B,
         stop_clock = get_time();
         secs    = (stop_clock - start_clock) / 1000000.0;
 
-	mflops  = (2.0 * dim * dim * dim * num_iterations) / 1.0e6;
-	mflop_s = mflops / secs;
+	gflops  = (2.0 * dim * dim * dim * num_iterations) / 1.0e9;
+	gflop_s = gflops / secs;
 
-	printf(".. runs:%5d,  time:%10g,  mflop:%8g,  mflop/s:%8g\n",
-	       num_iterations, secs, mflops, mflop_s);
+	printf(".. runs:%5d,  time:%10g,  GFlop:%8g,  GFlop/s:%8g\n",
+	       num_iterations, secs, gflops, gflop_s);
 
         num_iterations *= 2;
     }
-    return mflop_s;
+    return gflop_s;
 }
 
 
@@ -227,7 +227,7 @@ int
 main (int  argc,  char  *argv[])
 {
      unsigned	 i;
-     double	 mflop_s;
+     double	 gflop_s;
 
      int	 validate = 1;
      int	 size_step = 1;
@@ -260,7 +260,7 @@ main (int  argc,  char  *argv[])
      {
           const unsigned dim = test_sizes[i];
 
-          mflop_s = time_dgemm(A, B, C, dim);
+          gflop_s = time_dgemm(A, B, C, dim);
 	  if (validate)
 	  {
 	      matrix_clear(C, MAX_SIZE);
@@ -268,8 +268,8 @@ main (int  argc,  char  *argv[])
 	      validate_dgemm (A, B, C, dim);
 	  }
 
-          printf("Size: %u\tmflop/s: %g\n", dim, mflop_s);
-	  fprintf(tmp_file, "%u %g\n", dim, mflop_s);
+          printf("Size: %u\tGFlop/s: %g\n", dim, gflop_s);
+	  fprintf(tmp_file, "%u %g\n", dim, gflop_s);
      }
      fclose(tmp_file);
 

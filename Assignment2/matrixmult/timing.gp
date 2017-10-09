@@ -1,7 +1,8 @@
 set title "NxN matrix-matrix-multiplication on 10-Core Intel(R) Xeon(R) CPU E5-2650 v3 @ 2.30GHz"
 set xlabel "Matrix size (N)"
-set ylabel "Performance (MFlop/s)"
+set ylabel "Performance (GFlop/s)"
 set grid
+set logscale y 10
 
 set terminal postscript color "Helvetica" 14
 set output "timing.ps"
@@ -15,5 +16,5 @@ set output "timing.ps"
 # For performance comparisons
 
 plot "timing_basic_dgemm.data"   using 1:2 title "Naive dgemm" with linespoints, \
-     "timing_blocked_dgemm.data" using 1:2 title "Student dgemm" with linespoints, \
-     "timing_blas_dgemm.data"   using 1:2 title "OpenBLAS dgemm" with linespoints
+     "timing_blocked_dgemm.data" using 1:2 title "Blocked dgemm" with linespoints, \
+     "timing_blas_dgemm.data"   using 1:2 title "MKL blas dgemm" with linespoints
