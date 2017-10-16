@@ -1,7 +1,7 @@
 all: dotProduct
 
 dotProduct: dotProduct.cpp walltime.h
-	g++ $< -o $@
+	g++ -fopenmp $< -o $@
 
 clean:
 	rm -rf dotProduct

@@ -57,7 +57,7 @@ int main()
       }
   }
   time_serial = walltime(time_start);
-  cout << "Serial execution time =" << time_serial << " sec" << endl;
+  cout << "Serial execution time = " << time_serial << " sec" << endl;
   
   long double alpha_parallel = 0;
   double time_red=0;
@@ -71,7 +71,7 @@ int main()
     exit(1);
   }
   cout << "Parallel dot product = " << alpha_parallel
-       << " time using reduction method =" << time_red
+       << " time using reduction method = " << time_red
        << " sec, time using critical method " << time_critical
        << " sec" << endl;
   
