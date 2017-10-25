@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #
 # Plotting program, to use to visualize the output of the mini-app
 # CSCS - Summer School 2015
