@@ -99,7 +99,7 @@ Domain createDomain(Partition p)
     d.startx = 0;
     d.starty = 0;
 
-    // TODO: TODO: compute index of the last pixel in the local domain
+    // TODO: compute index of the last pixel in the local domain
     d.endx = IMAGE_WIDTH - 1;
     d.endy = IMAGE_HEIGHT - 1;
 

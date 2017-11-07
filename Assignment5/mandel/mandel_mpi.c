@@ -119,7 +119,7 @@ int main (int argc, char** argv)
 	// Send the data to the master
 	if (mpi_rank != 0)
 	{
-		// TODO: send local pertition c to the master process
+		// TODO: send local partition c to the master process
 	}
 	/****************************************************************************/
 	// Write the image
